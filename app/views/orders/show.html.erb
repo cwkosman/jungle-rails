@@ -8,6 +8,26 @@
     <h4>Thank you for your order!</h4>
   </div>
 
-  <%= link_to "Continue Shopping", root_path, class: 'btn btn-lg btn-primary' %>
-
+  <div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>Order summary </h2>
+    <p>Placed by <%= @order.email %></p>
+  </div>
+  <div class= "panel-body">
+  <table class="table table-bordered">
+    <thead>
+      <th></th>
+      <th>Item</th>
+      <th>Quantity</th>
+      <th>Item Total</th>
+    </thead>
+    <tbody>
+    <%= render @order.line_items %>
+    </tbody>
+  </table>
+  <h4>Order total: <%= @order.order_total %> </h4>
+  </div>
+</div>
 </section>
+
+<%= link_to "Continue Shopping", root_path, class: 'btn btn-lg btn-primary' %>

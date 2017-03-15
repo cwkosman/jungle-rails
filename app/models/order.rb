@@ -7,4 +7,11 @@ class Order < ActiveRecord::Base
 
   validates :stripe_charge_id, presence: true
 
+  def order_total
+    sum = 0
+    line_items.each do |item|
+      sum += item.total_price
+    end
+    sum
+  end
 end
