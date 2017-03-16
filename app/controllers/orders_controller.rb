@@ -20,7 +20,6 @@ class OrdersController < ApplicationController
 
   respond_to do |format|
       if @order.save
-        # Tell the OrderMailer to send a welcome email after save
         OrderMailer.conf_email(@order).deliver_later
 
         format.html { redirect_to(@order, notice: 'Order was successfully created.') }

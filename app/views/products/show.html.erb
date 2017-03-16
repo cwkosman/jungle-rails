@@ -34,11 +34,11 @@
     <div class="panel-heading">
       <h3>Product Reviews</h2>
     </div>
-    <% @product.reviews.each do |review| %>
+    <% @product.reviews.reverse.each do |review| %>
     <div class="product-review panel-body">
-      <p> Rating: <%= review.rating %></p>
-      <p> Reviewed by <%= User.find(review.user_id).first_name %>
-      <p> <%= review.description %> </p>
+      <p> Rating: <%= review.rating %>/5</p>
+      <p> Reviewed by <%= User.find(review.user_id).first_name %> <%= User.find(review.user_id).last_name %> </p>
+      <p><%= review.description %></p>
     </div>
     <% end %>
   </article>
@@ -46,6 +46,25 @@
 
 <section class="product-review-form">
   <%= form_for([@product, @product.reviews.build]) do |f| %>
+  <% if @review && @review.errors.any? %>
+      <div class="alert alert-danger">
+        <p>
+          <%= pluralize(@review.errors.count, "error") %> prohibited
+          this review from being saved:
+        </p>
+        <ul>
+          <% @review.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+  <% end %>
+  <% if current_user %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3> Write a review </h3>
+    </div>
+    <div class="panel-body">
     <div class="form-group">
       <%= f.label :rating %>
       <%= f.select :rating, options_for_select((1..5).map{|i| i }), { include_blank: true }, class: 'form-control' %>
@@ -55,5 +74,7 @@
       <%= f.text_area :description, class: 'form-control' %>
     </div>
     <%= f.submit 'Post Review', class: 'btn btn-primary' %>
-  </p>
+  </div>
+
+<% end %>
 <% end %>
