@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe 'Validations' do
     let(:user) do
-      User.create(
+      User.create!(
         first_name: 'Han',
         last_name: 'Solo',
-        email: 'hansolo@mfalcon.net',
+        email: 'millenium@falcon.net',
         password: 'easychewie',
         password_confirmation: 'easychewie'
       )
@@ -28,6 +28,19 @@ RSpec.describe User, type: :model do
       expect(user.errors.full_messages).to eq(
         ['Password can\'t be blank', 'Password confirmation can\'t be blank']
       )
+    end
+
+    it 'should not be valid if the email is already in use' do
+      user
+      user2 = User.new(
+        first_name: 'Lando',
+        last_name: 'Calrissian',
+        email: 'millenium@falcon.net',
+        password: 'punchit',
+        password_confirmation: 'punchit'
+      )
+      user2.valid?
+      expect(user2.errors.full_messages).to eq(['Email has already been taken'])
     end
   end
 end
