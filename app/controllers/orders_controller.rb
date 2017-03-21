@@ -18,6 +18,7 @@ class OrdersController < ApplicationController
     rescue Stripe::CardError => e
       redirect_to cart_path, error: e.message
 
+
     respond_to do |format|
       if @order.save
         OrderMailer.conf_email(@order).deliver_later
