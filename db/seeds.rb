@@ -138,46 +138,49 @@ puts "Re-creating users ..."
 
 User.destroy_all
 
-User.create(
+User.create!(
   first_name: 'Luke',
   last_name: 'Skywalker',
   email: 'lskywalker@jedi.net',
-  password_digest: BCrypt::Password.create('usetheforce')
+  password: 'USER1_PASS',
+  password_confirmation: 'USER1_PASS'
 )
 
-User.create(
+User.create!(
   first_name: 'Leia',
   last_name: 'Organa',
   email: 'leia@rebellion.net',
-  password_digest: BCrypt::Password.create('urmyonlyhope')
+  password: 'USER2_PASS',
+  password_confirmation: 'USER2_PASS'
 )
 
-User.create(
+User.create!(
   first_name: 'Darth',
   last_name: 'Vader',
   email: 'vader@empire.net',
-  password_digest: BCrypt::Password.create('theforceisstrong')
+  password: 'USER3_PASS',
+  password_confirmation: 'USER3_PASS'
 )
 
-# Users
+# Reviews
 
 puts 'Re-creating reviews ...'
 
-Review.create(
+Review.create!(
   product_id: 12,
   user_id: 1,
   description: 'Holds all my Power Converter manuals. Wish it came in blue',
   rating: 4
 )
 
-Review.create(
+Review.create!(
   product_id: 12,
   user_id: 2,
   description: 'This bookcase will spread peace throughout the galaxy.',
   rating: 5
 )
 
-Review.create(
+Review.create!(
   product_id: 12,
   user_id: 3,
   description: 'I find the lack of shelves disturbing.',
