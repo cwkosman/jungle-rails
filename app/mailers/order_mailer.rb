@@ -3,9 +3,6 @@ class OrderMailer < ApplicationMailer
 
   def conf_email(order)
     @order = order
-    mail(
-      to: 'email@example.com',
-      subject: "Jungle Order Confirmation: Order \n##{@order.id}"
-    )
+    mail to: 'email@example.com', subject: "Jungle Order Confirmation: Order \n##{@order.id}"
   end
 end
