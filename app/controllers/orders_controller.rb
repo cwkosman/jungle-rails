@@ -20,14 +20,14 @@ class OrdersController < ApplicationController
 
 
     respond_to do |format|
-      if @order.save
-        OrderMailer.conf_email(@order).deliver_later
+      if order.save
+        OrderMailer.conf_email(order).deliver_later
 
-        format.html { redirect_to(@order, notice: 'Order was successfully created.') }
-        format.json { render json: @order, status: :created, location: @order }
+        format.html { redirect_to(order, notice: 'Order was successfully created.') }
+        format.json { render json: order, status: :created, location: order }
       else
         format.html { render action: 'new' }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+        format.json { render json: order.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -48,9 +48,13 @@ class OrdersController < ApplicationController
     )
   end
 
+  def user?
+    current_user ? current_user.email : params[:stripeEmail]
+  end
+
   def create_order(stripe_charge)
     order = Order.new(
-      email: params[:stripeEmail],
+      email: user?,
       total_cents: cart_total,
       stripe_charge_id: stripe_charge.id, # returned by stripe
     )
