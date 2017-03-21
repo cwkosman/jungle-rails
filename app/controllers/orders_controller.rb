@@ -15,10 +15,10 @@ class OrdersController < ApplicationController
       redirect_to cart_path, error: order.errors.full_messages.first
     end
 
-  rescue Stripe::CardError => e
-    redirect_to cart_path, error: e.message
+    rescue Stripe::CardError => e
+      redirect_to cart_path, error: e.message
 
-  respond_to do |format|
+    respond_to do |format|
       if @order.save
         OrderMailer.conf_email(@order).deliver_later
 
@@ -28,6 +28,8 @@ class OrdersController < ApplicationController
         format.html { render action: 'new' }
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
+    end
+  end
 
   private
 
