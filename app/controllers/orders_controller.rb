@@ -17,6 +17,7 @@ class OrdersController < ApplicationController
 
   rescue Stripe::CardError => e
     redirect_to cart_path, error: e.message
+  end
 
   respond_to do |format|
       if @order.save
@@ -28,6 +29,7 @@ class OrdersController < ApplicationController
         format.html { render action: 'new' }
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
+    end
 
   private
 
